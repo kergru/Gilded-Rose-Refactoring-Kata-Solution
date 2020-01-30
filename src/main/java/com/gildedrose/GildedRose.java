@@ -16,23 +16,23 @@ class GildedRose {
                     && !item.name.equals(BACKSTAGE_PASSES_TO_A_TAFKAL_80_ETC_CONCERT)) {
                 if (item.quality > 0) {
                     if (!item.name.equals(SULFURAS_HAND_OF_RAGNAROS)) {
-                        item.quality = item.quality - 1;
+                        decreaseQuality(item);
                     }
                 }
             } else {
                 if (item.quality < 50) {
-                    item.quality = item.quality + 1;
+                    increaseQuality(item);
 
                     if (item.name.equals(BACKSTAGE_PASSES_TO_A_TAFKAL_80_ETC_CONCERT)) {
                         if (item.sellIn < 11) {
                             if (item.quality < 50) {
-                                item.quality = item.quality + 1;
+                                increaseQuality(item);
                             }
                         }
 
                         if (item.sellIn < 6) {
                             if (item.quality < 50) {
-                                item.quality = item.quality + 1;
+                                increaseQuality(item);
                             }
                         }
                     }
@@ -40,7 +40,7 @@ class GildedRose {
             }
 
             if (!item.name.equals(SULFURAS_HAND_OF_RAGNAROS)) {
-                item.sellIn = item.sellIn - 1;
+                decreaseSellIn(item);
             }
 
             if (item.sellIn < 0) {
@@ -48,18 +48,34 @@ class GildedRose {
                     if (!item.name.equals(BACKSTAGE_PASSES_TO_A_TAFKAL_80_ETC_CONCERT)) {
                         if (item.quality > 0) {
                             if (!item.name.equals(SULFURAS_HAND_OF_RAGNAROS)) {
-                                item.quality = item.quality - 1;
+                                decreaseQuality(item);
                             }
                         }
                     } else {
-                        item.quality = item.quality - item.quality;
+                        resetQuality(item);
                     }
                 } else {
                     if (item.quality < 50) {
-                        item.quality = item.quality + 1;
+                        increaseQuality(item);
                     }
                 }
             }
         }
+    }
+
+    private void resetQuality(Item item) {
+        item.quality = 0;
+    }
+
+    private void decreaseSellIn(Item item) {
+        item.sellIn = item.sellIn - 1;
+    }
+
+    private void increaseQuality(Item item) {
+        item.quality = item.quality + 1;
+    }
+
+    private void decreaseQuality(Item item) {
+        item.quality = item.quality - 1;
     }
 }
